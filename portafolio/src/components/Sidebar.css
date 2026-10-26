@@ -1,0 +1,200 @@
+.sidebar {
+  position: fixed;
+  z-index: 100;
+  top: 50%;
+  left: 16px;
+  transform: translateY(-50%);
+  width: 168px;
+  padding: 12px;
+  border: 1px solid #ffffffb0;
+  border-radius: 20px;
+  background: #f6ecdfd9;
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  box-shadow: 0 16px 40px #3d2d201e;
+}
+
+.sidebar-links {
+  display: grid;
+  gap: 5px;
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  min-height: 44px;
+  padding: 0 12px;
+  border-radius: 10px;
+  color: #695a49;
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: background .25s, color .25s;
+}
+
+.sidebar-link svg {
+  flex: none;
+}
+
+.sidebar-link:hover,
+.sidebar-link.active {
+  background: var(--dark);
+  color: #fff;
+}
+
+.sidebar-link-number,
+.mobile-navigation {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .sidebar {
+    display: none;
+  }
+
+  .mobile-navigation {
+    position: fixed;
+    z-index: 200;
+    inset: 0 0 auto;
+    display: block;
+    background: #f6ecdfed;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 8px 28px #3d2d2018;
+  }
+
+  .mobile-navigation.is-open {
+    bottom: 0;
+    overflow-y: auto;
+    height: 100dvh;
+    background: var(--dark);
+    color: #fff;
+  }
+
+  .mobile-navigation.is-open .mobile-nav-header {
+    position: sticky;
+    z-index: 1;
+    top: 0;
+    background: var(--dark);
+  }
+
+  .mobile-nav-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    min-height: 76px;
+    padding: 10px max(22px, env(safe-area-inset-right)) 10px max(22px, env(safe-area-inset-left));
+  }
+
+  .mobile-current-section {
+    display: grid;
+    gap: 2px;
+    min-width: 0;
+  }
+
+  .mobile-current-section span {
+    color: var(--accent-deep);
+    font-size: 10px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+  }
+
+  .mobile-current-section strong {
+    overflow: hidden;
+    font-size: 18px;
+    font-weight: 500;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .mobile-navigation.is-open .mobile-current-section span {
+    color: #e1b583;
+  }
+
+  .mobile-menu-toggle {
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    border: 1px solid #bfa98f;
+    border-radius: 10px;
+    background: transparent;
+    color: var(--dark);
+  }
+
+  .mobile-navigation.is-open .mobile-menu-toggle {
+    border-color: #c9a577;
+    color: #fff;
+  }
+
+  .mobile-menu-icon {
+    display: grid;
+    gap: 5px;
+    width: 20px;
+  }
+
+  .mobile-menu-icon span {
+    display: block;
+    width: 20px;
+    height: 2px;
+    border-radius: 2px;
+    background: currentColor;
+    transition: transform .2s, opacity .2s;
+  }
+
+  .mobile-navigation.is-open .mobile-menu-icon span:first-child {
+    transform: translateY(7px) rotate(45deg);
+  }
+
+  .mobile-navigation.is-open .mobile-menu-icon span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .mobile-navigation.is-open .mobile-menu-icon span:last-child {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  .mobile-menu-links {
+    display: grid;
+    gap: 4px;
+    padding: 32px max(22px, env(safe-area-inset-right)) calc(32px + env(safe-area-inset-bottom)) max(22px, env(safe-area-inset-left));
+  }
+
+  .mobile-menu-links[hidden] {
+    display: none;
+  }
+
+  .mobile-menu-links p {
+    margin: 0 0 14px;
+    color: #e1b583;
+    font-size: 12px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+  }
+
+  .mobile-menu-links .sidebar-link {
+    min-height: 64px;
+    padding: 0 15px;
+    border-bottom: 1px solid #ffffff30;
+    border-radius: 0;
+    color: #f1e8db;
+    font-size: clamp(21px, 6vw, 30px);
+    font-weight: 400;
+  }
+
+  .mobile-menu-links .sidebar-link:hover,
+  .mobile-menu-links .sidebar-link.active {
+    background: #ffffff16;
+    color: #e1b583;
+  }
+
+  .mobile-menu-links .sidebar-link-number {
+    display: block;
+    margin-left: auto;
+    color: #c9a577;
+    font-size: 12px;
+  }
+}
