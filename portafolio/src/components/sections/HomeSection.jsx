@@ -1,37 +1,36 @@
 import Icon from "../Icon";
+import "./HomeSection.css";
 
 export default function HomeSection() {
   return (
     <section id="inicio" className="page-section hero-section">
-      <div className="hero-grid">
+      <div className="hero-scene" aria-hidden="true" />
+      <div className="hero-content">
         <div className="hero-copy">
+          <span className="hero-kicker">Desarrollador Full Stack</span>
           <h1>
-            Carlos Daniel
+            Hola, soy
             <br />
-            <em>
-              Pure<span>.</span>
-            </em>
+            <em>Carlos Daniel Pure.</em>
           </h1>
           <p className="hero-description">
-            Desarrollador de software enfocado en crear experiencias
-            digitales claras, funcionales y cuidadas hasta el último
-            detalle.
+            Diseño y construyo productos web de principio a fin, desde la idea
+            hasta su publicación. Me importa que cada solución sea clara,
+            funcional y esté cuidada hasta el último detalle.
           </p>
           <div className="hero-actions">
             <a href="#proyectos" className="button-primary">
-              Explorar proyectos <Icon name="arrow" size={18} />
+              Mira mis proyectos <Icon name="arrow" size={18} />
             </a>
             <a href="#contacto" className="text-link">
               Hablemos ↗
             </a>
           </div>
         </div>
-        <div className="hero-art" aria-hidden="true">
-          <div className="art-orbit orbit-one" />
-          <div className="art-orbit orbit-two" />
-          <span className="art-symbol">&lt;/&gt;</span>
-        </div>
       </div>
+      <a className="hero-scroll" href="#sobre-mi">
+        Descubre más <span aria-hidden="true">↓</span>
+      </a>
     </section>
   );
 }

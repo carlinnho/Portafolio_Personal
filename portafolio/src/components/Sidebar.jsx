@@ -31,14 +31,23 @@ function NavigationLinks({ active, onNavigate }) {
 
 export default function Sidebar({ active }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [menuReady, setMenuReady] = useState(false);
   const menuRef = useRef(null);
   const toggleRef = useRef(null);
   const activeLabel = nav.find(([id]) => id === active)?.[1] ?? "Inicio";
 
+  function closeMenu() {
+    setMenuReady(false);
+    setIsOpen(false);
+  }
+
   useEffect(() => {
     const media = window.matchMedia("(max-width: 900px)");
     const closeOnDesktop = () => {
-      if (!media.matches) setIsOpen(false);
+      if (!media.matches) {
+        setMenuReady(false);
+        setIsOpen(false);
+      }
     };
     media.addEventListener("change", closeOnDesktop);
     return () => media.removeEventListener("change", closeOnDesktop);
@@ -49,14 +58,25 @@ export default function Sidebar({ active }) {
 
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    menuRef.current?.querySelector("a")?.focus();
+    const focusTimer = window.setTimeout(
+      () => setMenuReady(true),
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 1000,
+    );
 
     const handleKeyDown = (event) => {
       if (event.key === "Escape") {
+        setMenuReady(false);
         setIsOpen(false);
         toggleRef.current?.focus();
+        return;
       }
       if (event.key !== "Tab") return;
+
+      if (menuRef.current?.inert) {
+        event.preventDefault();
+        toggleRef.current?.focus();
+        return;
+      }
 
       const focusable = [
         toggleRef.current,
@@ -75,14 +95,22 @@ export default function Sidebar({ active }) {
 
     document.addEventListener("keydown", handleKeyDown);
     return () => {
+      window.clearTimeout(focusTimer);
       document.body.style.overflow = previousOverflow;
       document.removeEventListener("keydown", handleKeyDown);
     };
   }, [isOpen]);
 
+  useEffect(() => {
+    if (menuReady) menuRef.current?.querySelector("a")?.focus();
+  }, [menuReady]);
+
   return (
     <>
       <nav className="sidebar" aria-label="Navegación principal">
+        <a className="nav-emblem" href="#inicio" aria-label="Ir al inicio">
+          <Icon name="trebleClef" size={28} />
+        </a>
         <div className="sidebar-links">
           <NavigationLinks active={active} />
         </div>
@@ -95,6 +123,9 @@ export default function Sidebar({ active }) {
         aria-label={isOpen ? "Menú de navegación" : undefined}
       >
         <div className="mobile-nav-header">
+          <span className="mobile-nav-emblem" aria-hidden="true">
+            <Icon name="trebleClef" size={28} />
+          </span>
           <div className="mobile-current-section">
             <span>Sección actual</span>
             <strong>{activeLabel}</strong>
@@ -106,7 +137,7 @@ export default function Sidebar({ active }) {
             aria-label={isOpen ? "Cerrar menú" : "Abrir menú"}
             aria-expanded={isOpen}
             aria-controls="mobile-menu-links"
-            onClick={() => setIsOpen((open) => !open)}
+            onClick={() => (isOpen ? closeMenu() : setIsOpen(true))}
           >
             <span className="mobile-menu-icon" aria-hidden="true">
               <span />
@@ -120,13 +151,14 @@ export default function Sidebar({ active }) {
           ref={menuRef}
           className="mobile-menu-links"
           aria-label="Atajos a secciones"
-          hidden={!isOpen}
+          aria-hidden={!menuReady}
+          inert={!menuReady}
         >
           <p>Ir a una sección</p>
           <NavigationLinks
             active={active}
             onNavigate={() => {
-              setIsOpen(false);
+              closeMenu();
               toggleRef.current?.focus();
             }}
           />

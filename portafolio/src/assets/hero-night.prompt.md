@@ -1,0 +1,5 @@
+# Hero illustration prompt
+
+Generated with the built-in image generation tool.
+
+> Use case: stylized-concept. Asset type: full-bleed desktop website hero illustration for a software developer portfolio. Scene: an original, atmospheric moonlit coastal observatory landscape at blue hour, a small modern observatory and distant city lights on the right side, luminous cloud layers and a few delicate star-like light points suggesting curiosity and technology without literal computer symbols. Style: painterly digital illustration with visible soft brush texture, cinematic depth, editorial and literary mood, sophisticated rather than fantasy. Composition: wide 16:9 landscape; leave the lower-left and central-left areas calm and darker with minimal detail so a translucent text card can overlay legibly; visual focal point toward the right. Palette: deep midnight blue #003159, electric sky blue #3598ff used sparingly for moonlight and distant lights, cool near-white #ededed highlights. No typography, no logos, no UI, no code glyphs, no turquoise, no warm orange, no stock-photo look, no abstract 3D, no watermark.
