@@ -20,7 +20,7 @@ const facts = [
 
 // Edita aquí tus gustos: [clave, valor]
 const tastes = [
-  ["Genero Favorito", "Rock/Metal"],
+  ["Genero Favorito", "Rock/Metal y femboys goticos"],
   ["Artistas Favoritos", "SOAD, MCR, Oasis, Queen"],
   ["Anime Favorito", "Jojos"],
 ];
