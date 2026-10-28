@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
+import { LazyMotion, domAnimation } from "motion/react";
 import Sidebar from "./components/Sidebar";
+import CustomCursor from "./components/CustomCursor";
 import HomeSection from "./components/sections/HomeSection";
 import AboutSection from "./components/sections/AboutSection";
 import ProjectsSection from "./components/sections/ProjectsSection";
@@ -33,7 +35,7 @@ function App() {
     };
   }, []);
   return (
-    <>
+    <LazyMotion features={domAnimation} strict>
       <a href="#contenido" className="skip-link">
         Saltar al contenido
       </a>
@@ -51,7 +53,8 @@ function App() {
         <span>Diseñado y construido con intención.</span>
         <a href="#inicio">Volver arriba ↑</a>
       </footer>
-    </>
+      <CustomCursor />
+    </LazyMotion>
   );
 }
 export default App;

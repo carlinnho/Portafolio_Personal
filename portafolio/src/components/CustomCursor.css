@@ -1,0 +1,17 @@
+@media (hover: hover) and (pointer: fine) {
+  html.custom-cursor-active,
+  html.custom-cursor-active * {
+    cursor: none !important;
+  }
+}
+
+.custom-cursor {
+  position: fixed;
+  z-index: 1000;
+  width: 14px;
+  height: 14px;
+  border: 1.5px solid transparent;
+  border-radius: 50%;
+  pointer-events: none;
+  will-change: transform, width, height;
+}

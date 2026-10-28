@@ -1,11 +1,12 @@
 .hero-section {
+  position: relative;
   isolation: isolate;
   display: flex;
   align-items: flex-end;
   min-height: 100svh;
   padding: 150px clamp(24px, 6vw, 96px) 86px;
   overflow: hidden;
-  background: #003159;
+  background: #0d0b18;
   color: #ededed;
 }
 
@@ -13,12 +14,18 @@
   position: absolute;
   z-index: -2;
   inset: 0;
-  background-image:
-    linear-gradient(90deg, rgba(0, 22, 43, .3), rgba(0, 49, 89, .04) 74%),
-    linear-gradient(0deg, rgba(0, 22, 43, .25), transparent 55%),
-    url("../../assets/hero-smoke.webp");
-  background-position: center;
-  background-size: cover;
+  overflow: hidden;
+  background: #0d0b18;
+  pointer-events: none;
+}
+
+.hero-scene::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background:
+    linear-gradient(90deg, rgba(3, 9, 27, .2), transparent 68%),
+    linear-gradient(0deg, #0d0b18 0%, rgba(13, 11, 24, .95) 15%, transparent 58%);
 }
 
 .hero-content {
@@ -128,24 +135,14 @@
 
 .hero-scroll span {
   display: inline-block;
-  font-size: 20px;
+  font-size: 24px;
   line-height: 1;
-  animation: hero-scroll-arrow 1.6s ease-in-out infinite;
-}
-
-@keyframes hero-scroll-arrow {
-  0%, 100% { transform: translateY(-3px); }
-  50% { transform: translateY(5px); }
 }
 
 @media (max-width: 900px) {
   .hero-section {
     min-height: 100svh;
     padding: 120px 28px 55px;
-  }
-
-  .hero-scene {
-    background-position: 58% center;
   }
 
   .hero-scroll {
@@ -157,10 +154,6 @@
   .hero-section {
     min-height: 100svh;
     padding: 110px 20px 28px;
-  }
-
-  .hero-scene {
-    background-position: 58% center;
   }
 
   .hero-copy {
@@ -180,11 +173,5 @@
 
   .hero-description {
     margin: 20px 0 24px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-scroll span {
-    animation: none;
   }
 }
