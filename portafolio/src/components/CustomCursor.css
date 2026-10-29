@@ -3,6 +3,19 @@
   html.custom-cursor-active * {
     cursor: none !important;
   }
+
+  html.custom-cursor-active:has(.project-credits-dialog[open]),
+  html.custom-cursor-active:has(.project-credits-dialog[open]) * {
+    cursor: auto !important;
+  }
+
+  html.custom-cursor-active:has(.project-credits-dialog[open]) .project-credits-dialog :is(a, button) {
+    cursor: pointer !important;
+  }
+
+  html:has(.project-credits-dialog[open]) .custom-cursor {
+    visibility: hidden;
+  }
 }
 
 .custom-cursor {

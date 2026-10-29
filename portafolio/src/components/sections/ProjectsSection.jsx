@@ -1,135 +1,211 @@
 import { useEffect, useRef, useState } from "react";
+import useEmblaCarousel from "embla-carousel-react";
 import { projects } from "../../data/projects";
 import Icon from "../Icon";
 import { Heading, SectionLabel } from "../SectionHeading";
 
 function ProjectPreview({ project }) {
   return (
-    <div
-      className={`project-preview ${project.theme}`}
-      role="img"
-      aria-label={`Imagen temporal para ${project.name}; reemplazar por captura real`}
-    >
-      <span className="preview-mark" aria-hidden="true">
-        {project.name.slice(0, 1)}
-      </span>
-      <span className="preview-label">IMAGEN TEMPORAL · {project.type}</span>
+    <div className={`project-preview ${project.theme}`} aria-hidden="true">
+      <div className="preview-browser">
+        <span className="preview-browser-bar">
+          <span className="preview-browser-dots">● ● ●</span>
+          <span>{new URL(project.demoUrl).hostname}</span>
+        </span>
+        <img
+          className="preview-browser-image"
+          src={project.image}
+          alt=""
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
     </div>
   );
 }
-function ProjectCard({ project, index }) {
+function ProjectCard({ project }) {
+  const creditsRef = useRef(null);
+  const isTeamProject = Boolean(project.collaborators?.length);
+
   return (
     <article className="project-card">
       <ProjectPreview project={project} />
       <div className="project-content">
         <div className="project-meta">
-          <span>PROYECTO / 0{index + 1}</span>
           <span>{project.type}</span>
+          <span>{isTeamProject ? "En equipo" : "Individual"}</span>
         </div>
         <h3>{project.name}</h3>
         <p>{project.description}</p>
-        <div className="tags">
-          {project.technologies.map((tech) => (
-            <span key={tech}>{tech}</span>
-          ))}
-        </div>
         <div className="project-action">
-          {project.demoUrl ? (
-            <a href={project.demoUrl} target="_blank" rel="noopener noreferrer">
-              Ver demo <Icon name="external" size={16} />
-            </a>
-          ) : (
-            <span>
-              Demo próximamente <Icon name="arrow" size={16} />
-            </span>
+          <a href={project.demoUrl} target="_blank" rel="noopener noreferrer">
+            Ver sitio <Icon name="external" size={16} />
+          </a>
+          {isTeamProject && (
+            <button
+              type="button"
+              onClick={() => creditsRef.current?.showModal()}
+            >
+              Ver créditos
+            </button>
           )}
         </div>
       </div>
+      {isTeamProject && (
+        <dialog
+          ref={creditsRef}
+          className="project-credits-dialog"
+          aria-labelledby={`${project.id}-credits-title`}
+          onClick={(event) => {
+            if (event.target === event.currentTarget)
+              event.currentTarget.close();
+          }}
+        >
+          <div className="project-credits-content">
+            <button
+              type="button"
+              className="credits-close"
+              onClick={() => creditsRef.current?.close()}
+              aria-label="Cerrar créditos"
+            >
+              <Icon name="close" size={18} />
+            </button>
+            <span className="credits-eyebrow">
+              {project.organization} · Trabajo en equipo
+            </span>
+            <h4 id={`${project.id}-credits-title`}>
+              Créditos de {project.name}
+            </h4>
+            <h5>Mi participación</h5>
+            <p>{project.contribution}</p>
+            <h5>Colaboradores</h5>
+            <ul>
+              {project.collaborators.map((person) => (
+                <li key={person.name}>
+                  <a
+                    href={person.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {person.name} <Icon name="external" size={14} />
+                  </a>
+                  {person.contribution && <span>{person.contribution}</span>}
+                </li>
+              ))}
+            </ul>
+            {project.creditNote && (
+              <p className="credits-note">{project.creditNote}</p>
+            )}
+          </div>
+        </dialog>
+      )}
     </article>
   );
 }
 function ProjectsCarousel() {
-  const trackRef = useRef(null);
-  const [position, setPosition] = useState({
-    index: 0,
-    canPrev: false,
-    canNext: projects.length > 1,
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    loop: true,
+    align: "start",
+    slidesToScroll: 1,
   });
-  function updatePosition() {
-    const track = trackRef.current;
-    if (!track) return;
-    const cards = [...track.children];
-    const closest = cards.reduce(
-      (best, card, index) =>
-        Math.abs(card.offsetLeft - cards[0].offsetLeft - track.scrollLeft) <
-        Math.abs(
-          cards[best].offsetLeft - cards[0].offsetLeft - track.scrollLeft,
-        )
-          ? index
-          : best,
-      0,
-    );
-    setPosition({
-      index: closest,
-      canPrev: track.scrollLeft > 3,
-      canNext: track.scrollLeft < track.scrollWidth - track.clientWidth - 3,
-    });
-  }
+  const [carouselState, setCarouselState] = useState({
+    selected: 0,
+    snaps: [],
+    canPrev: false,
+    canNext: false,
+  });
+
   useEffect(() => {
-    const track = trackRef.current;
-    const resize = new ResizeObserver(updatePosition);
-    resize.observe(track);
-    updatePosition();
-    return () => resize.disconnect();
-  }, []);
-  function move(direction) {
-    const track = trackRef.current;
-    const card = track?.firstElementChild;
-    if (!card) return;
-    const gap = parseFloat(getComputedStyle(track).gap) || 0;
-    track.scrollBy({
-      left: direction * (card.getBoundingClientRect().width + gap),
-      behavior: "smooth",
-    });
-  }
+    if (!emblaApi) return;
+
+    const updateControls = () => {
+      setCarouselState({
+        selected: emblaApi.selectedScrollSnap(),
+        snaps: emblaApi.scrollSnapList(),
+        canPrev: emblaApi.canScrollPrev(),
+        canNext: emblaApi.canScrollNext(),
+      });
+    };
+
+    updateControls();
+    emblaApi.on("select", updateControls).on("reInit", updateControls);
+    return () => {
+      emblaApi.off("select", updateControls).off("reInit", updateControls);
+    };
+  }, [emblaApi]);
+
   return (
     <div className="carousel">
-      <div className="carousel-controls">
-        <span aria-live="polite">
-          {String(position.index + 1).padStart(2, "0")} /{" "}
-          {String(projects.length).padStart(2, "0")}
-        </span>
-        <div>
-          <button
-            type="button"
-            onClick={() => move(-1)}
-            disabled={!position.canPrev}
-            aria-label="Proyecto anterior"
-          >
-            ←
-          </button>
-          <button
-            type="button"
-            onClick={() => move(1)}
-            disabled={!position.canNext}
-            aria-label="Proyecto siguiente"
-          >
-            →
-          </button>
-        </div>
+      <div className="carousel-buttons">
+        <button
+          className="carousel-arrow"
+          type="button"
+          onClick={() => emblaApi?.scrollPrev()}
+          disabled={!carouselState.canPrev}
+          aria-label="Proyecto anterior"
+        >
+          <Icon name="arrowLeft" size={19} />
+        </button>
+        <button
+          className="carousel-arrow"
+          type="button"
+          onClick={() => emblaApi?.scrollNext()}
+          disabled={!carouselState.canNext}
+          aria-label="Proyecto siguiente"
+        >
+          <Icon name="arrow" size={19} />
+        </button>
       </div>
       <div
-        className="projects-track"
-        ref={trackRef}
-        onScroll={updatePosition}
+        className="projects-viewport"
+        ref={emblaRef}
         role="region"
         aria-roledescription="carrusel"
         aria-label="Proyectos destacados"
-        tabIndex="0"
+        tabIndex={0}
+        onKeyDown={(event) => {
+          if (event.target !== event.currentTarget) return;
+          if (event.key === "ArrowLeft") {
+            event.preventDefault();
+            emblaApi?.scrollPrev();
+          }
+          if (event.key === "ArrowRight") {
+            event.preventDefault();
+            emblaApi?.scrollNext();
+          }
+        }}
       >
-        {projects.map((project, index) => (
-          <ProjectCard key={project.name} project={project} index={index} />
-        ))}
+        <div className="projects-track">
+          {projects.map((project) => (
+            <div className="project-slide" key={project.id}>
+              <ProjectCard project={project} />
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="carousel-controls">
+        <div
+          className="carousel-dots"
+          role="group"
+          aria-label="Elegir proyecto"
+        >
+          {carouselState.snaps.map((_, index) => (
+            <button
+              className={`carousel-dot${index === carouselState.selected ? " is-selected" : ""}`}
+              key={index}
+              type="button"
+              onClick={() => emblaApi?.scrollTo(index)}
+              aria-label={`Ir al proyecto ${index + 1}: ${projects[index]?.name ?? ""}`}
+              aria-current={
+                index === carouselState.selected ? "true" : undefined
+              }
+            />
+          ))}
+        </div>
+        <span className="carousel-count" aria-live="polite">
+          {String(carouselState.selected + 1).padStart(2, "0")} /{" "}
+          {String(projects.length).padStart(2, "0")}
+        </span>
       </div>
     </div>
   );
@@ -138,10 +214,15 @@ export default function ProjectsSection() {
   return (
     <section id="proyectos" className="page-section projects-section">
       <SectionLabel number="02">Proyectos</SectionLabel>
-      <Heading description="Los proyectos y sus imágenes son ejemplos temporales.">
-        Proyectos <em>destacados.</em>
+      <Heading description="Sitios que diseñé y desarrollé de forma individual y en equipo">
+        Proyectos <em>Desarrollados.</em>
       </Heading>
       <ProjectsCarousel />
+      <p className="projects-rights-note">
+        Las marcas y los contenidos de cada sitio corresponden a sus respectivos
+        titulares. Aquí describo mi participación en cada proyecto y reconozco
+        el trabajo de mis compañeros.
+      </p>
     </section>
   );
 }

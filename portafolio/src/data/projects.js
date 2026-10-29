@@ -1,8 +1,68 @@
-// Todos los proyectos son ejemplos temporales. Sustituye textos, capturas y enlaces.
 export const projects = [
-  { name: 'Panel de análisis', type: 'APLICACIÓN WEB', description: 'Ejemplo: reunir métricas dispersas en una interfaz clara para facilitar la lectura de datos.', technologies: ['React', 'Tailwind CSS', 'JavaScript'], theme: 'purple', demoUrl: null },
-  { name: 'Tienda digital', type: 'E-COMMERCE', description: 'Ejemplo: hacer más intuitiva la exploración de productos y el recorrido de compra.', technologies: ['React', 'CSS', 'API REST'], theme: 'orange', demoUrl: null },
-  { name: 'Gestor de tareas', type: 'PRODUCTIVIDAD', description: 'Ejemplo: organizar prioridades y pendientes en un espacio visual sencillo.', technologies: ['React', 'JavaScript', 'Local Storage'], theme: 'mint', demoUrl: null },
-  { name: 'Explorador de contenido', type: 'EXPERIENCIA DIGITAL', description: 'Ejemplo: descubrir contenido relevante mediante filtros y navegación simple.', technologies: ['React', 'Tailwind CSS', 'API REST'], theme: 'blue', demoUrl: null },
-  { name: 'Sitio de marca', type: 'SITIO WEB', description: 'Ejemplo: presentar una identidad y sus servicios en una experiencia responsive.', technologies: ['HTML', 'CSS', 'JavaScript'], theme: 'pink', demoUrl: null },
-]
+  {
+    id: "convenios-jb",
+    name: "Convenios JB",
+    type: "LANDING PAGE",
+    organization: "Consultora de Asesoría Empresarial JB",
+    description:
+      "Landing que presenta las alianzas y los beneficios de la consultora, realizada por mí.",
+    theme: "convenios",
+    image: "/Convenios.webp",
+    demoUrl: "https://consultoradeasesoriaempresarialjb.com/convenios/",
+  },
+  {
+    id: "verdece",
+    name: "Verdece",
+    type: "SITIO CORPORATIVO",
+    organization: "Verdece S.A.C.",
+    description:
+      "Diseño principal de la página de inicio, el encabezado y el pie de página en WordPress.",
+    contribution:
+      "Diseñé la página principal (index), el header y el footer. El sitio se realizó en equipo.",
+    collaborators: [
+      { name: "JesusWebTV", url: "https://github.com/JesusWebTV" },
+      { name: "AriannaHC", url: "https://github.com/AriannaHC" },
+    ],
+    theme: "verdece",
+    image: "/Verdece.webp",
+    demoUrl: "https://verdecesac.com/",
+  },
+  {
+    id: "portafolio-jb",
+    name: "Portafolio web JB",
+    type: "PORTAFOLIO WEB",
+    organization: "Consultora de Asesoría Empresarial JB",
+    description:
+      "Diseño e implementación en React de la estructura visual del sitio, desde el header hasta el footer.",
+    contribution:
+      "Diseñé e implementé casi toda la interfaz en React. En la sección de proyectos, mi aporte fue el diseño y la estructura, no los proyectos publicados por mis compañeros.",
+    creditNote:
+      "La sección «Confiabilidad técnica / Ingeniería de primer nivel» fue realizada por bktmatjv. Cada proyecto publicado en el portafolio conserva la autoría de quien lo creó.",
+    collaborators: [
+      {
+        name: "bktmatjv",
+        url: "https://github.com/bktmatjv",
+        contribution: "Sección de confiabilidad técnica y mejoras de diseño.",
+      },
+      {
+        name: "MariaFernandaFernandezAlva",
+        url: "https://github.com/MariaFernandaFernandezAlva",
+        contribution: "Mejoras de diseño.",
+      },
+    ],
+    theme: "portafolio",
+    image: "/portafolioJB.webp",
+    demoUrl: "https://portafolioweb.consultoradeasesoriaempresarialjb.com/#inicio",
+  },
+  {
+    id: "aprende-jugando",
+    name: "Aprende Jugando",
+    type: "LANDING PAGE",
+    organization: "Aprende Jugando",
+    description:
+      "Landing para una empresa de libros virtuales infantiles, diseñada y desarrollada íntegramente por mí.",
+    theme: "aprende",
+    image: "/AprendeJugando.webp",
+    demoUrl: "https://aprende-jugando-kits-educativos.vercel.app/",
+  },
+];
