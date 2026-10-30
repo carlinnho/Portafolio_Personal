@@ -6,12 +6,11 @@ Primera versión de una página personal con React, Vite y Tailwind CSS. Ejecuta
 
 - Edita los cinco proyectos en `src/data/projects.js`. Sustituye nombres, descripciones, tecnologías y enlaces. El carrusel admite más proyectos sin alargar la página. Las vistas de las tarjetas son imágenes temporales hechas con CSS en `src/App.jsx` y `src/App.css`; reemplaza `ProjectPreview` por imágenes reales con texto alternativo.
 - Edita la selección de herramientas en `src/data/technologies.js`. Conserva solo las que utilizas.
-- Edita los marcadores de logros en `src/data/achievements.js`. Agrega certificaciones reales, emisor, fecha y URL de verificación cuando existan.
 - Actualiza los textos personales en `src/App.jsx` y los metadatos en `index.html` cuando tengas el contenido definitivo. En la sección Sobre mí, reemplaza el elemento `about-photo` por tu fotografía.
 
 ## Configurar el formulario con EmailJS
 
-El formulario está conectado al endpoint REST de EmailJS sin dependencias adicionales. Hasta configurarlo, muestra un aviso y nunca afirma que envió un mensaje.
+La opción Correo está conectada al endpoint REST de EmailJS sin dependencias adicionales. Hasta configurarla, muestra un aviso y nunca afirma que envió un mensaje. La opción WhatsApp abre una conversación con el texto preparado; el visitante debe confirmar el envío allí. El número público de destino está en `src/components/sections/ContactSection.jsx`.
 
 1. Crea una cuenta en EmailJS y conecta el servicio de correo que recibirá los mensajes.
 2. Crea una plantilla de correo con estas variables: `{{from_name}}`, `{{reply_to}}`, `{{subject}}`, `{{message}}`. Configura como destinatario **tu dirección personal dentro de EmailJS** y usa `{{reply_to}}` como correo de respuesta.

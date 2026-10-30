@@ -7,7 +7,7 @@ const nav = [
   ["sobre-mi", "Sobre mí", "user"],
   ["proyectos", "Proyectos", "grid"],
   ["tecnologias", "Tecnologías", "layers"],
-  ["logros", "Logros", "award"],
+  ["servicios", "Qué puedo aportar", "code"],
   ["contacto", "Contacto", "mail"],
 ];
 

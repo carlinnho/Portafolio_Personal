@@ -6,7 +6,7 @@ import HomeSection from "./components/sections/HomeSection";
 import AboutSection from "./components/sections/AboutSection";
 import ProjectsSection from "./components/sections/ProjectsSection";
 import TechnologiesSection from "./components/sections/TechnologiesSection";
-import AchievementsSection from "./components/sections/AchievementsSection";
+import ServicesSection from "./components/sections/ServicesSection";
 import ContactSection from "./components/sections/ContactSection";
 import "./App.css";
 
@@ -45,13 +45,20 @@ function App() {
         <AboutSection />
         <ProjectsSection />
         <TechnologiesSection />
-        <AchievementsSection />
+        <ServicesSection />
         <ContactSection />
       </main>
       <footer className="site-footer">
-        <span>© {new Date().getFullYear()} Carlos Daniel Pure</span>
-        <span>Diseñado y construido con intención.</span>
-        <a href="#inicio">Volver arriba ↑</a>
+        <div className="site-footer-inner">
+          <div className="site-footer-identity">
+            <span>Carlos Daniel Pure</span>
+            <small>Desarrollador Full Stack</small>
+          </div>
+          <a className="site-footer-back-to-top" href="#inicio">
+            Volver arriba <span aria-hidden="true">↑</span>
+          </a>
+          <span className="site-footer-copyright">© {new Date().getFullYear()} Carlos Daniel Pure</span>
+        </div>
       </footer>
       <CustomCursor />
     </LazyMotion>
