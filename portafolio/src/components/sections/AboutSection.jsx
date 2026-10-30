@@ -1,5 +1,21 @@
 import { useState } from "react";
+import { useReducedMotion } from "motion/react";
+import * as m from "motion/react-m";
 import { Heading, SectionLabel } from "../SectionHeading";
+
+const sectionVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.12 } },
+};
+
+const revealVariants = {
+  hidden: { opacity: 0, y: 18 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+  },
+};
 
 const tabs = [
   { id: "foto", file: "foto.jpg" },
@@ -148,33 +164,48 @@ function CodeWindow() {
 }
 
 export default function AboutSection() {
+  const reducedMotion = useReducedMotion();
+
   return (
     <section id="sobre-mi" className="page-section about-section">
-      <SectionLabel number="01">Sobre mí</SectionLabel>
-      <div className="about-grid">
-        <div className="about-copy">
-          <Heading>
-            Diseño experiencias
-            <br />
-            <em>digitales.</em>
-          </Heading>
-          <div className="about-text">
-            <p className="lead">
-              Construyo productos web que se sienten simples por fuera y sólidos
-              por dentro.
-            </p>
+      <m.div
+        variants={sectionVariants}
+        initial={reducedMotion ? false : "hidden"}
+        whileInView={reducedMotion ? undefined : "visible"}
+        viewport={{ once: true, amount: 0.15 }}
+      >
+        <m.div variants={revealVariants}>
+          <SectionLabel number="01">Sobre mí</SectionLabel>
+        </m.div>
+        <div className="about-grid">
+          <div className="about-copy">
+            <m.div variants={revealVariants}>
+              <Heading>
+                Diseño experiencias
+                <br />
+                <em>digitales.</em>
+              </Heading>
+            </m.div>
+            <m.div className="about-text" variants={revealVariants}>
+              <p className="lead">
+                Construyo productos web que se sienten simples por fuera y
+                sólidos por dentro.
+              </p>
+            </m.div>
+            <m.dl className="about-facts" variants={revealVariants}>
+              {facts.map(([key, value]) => (
+                <div key={key}>
+                  <dt>{key}</dt>
+                  <dd>{value}</dd>
+                </div>
+              ))}
+            </m.dl>
           </div>
-          <dl className="about-facts">
-            {facts.map(([key, value]) => (
-              <div key={key}>
-                <dt>{key}</dt>
-                <dd>{value}</dd>
-              </div>
-            ))}
-          </dl>
+          <m.div variants={revealVariants}>
+            <CodeWindow />
+          </m.div>
         </div>
-        <CodeWindow />
-      </div>
+      </m.div>
     </section>
   );
 }

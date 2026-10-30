@@ -5,7 +5,7 @@ export const projects = [
     type: "LANDING PAGE",
     organization: "Consultora de Asesoría Empresarial JB",
     description:
-      "Landing que presenta las alianzas y los beneficios de la consultora, realizada por mí.",
+      "Landing que presenta los convenios y beneficios de la consultora JB, desarrollada con HTML y CSS en WordPress.",
     theme: "convenios",
     image: "/Convenios.webp",
     demoUrl: "https://consultoradeasesoriaempresarialjb.com/convenios/",
@@ -16,9 +16,9 @@ export const projects = [
     type: "SITIO CORPORATIVO",
     organization: "Verdece S.A.C.",
     description:
-      "Diseño principal de la página de inicio, el encabezado y el pie de página en WordPress.",
+      "Landing page para Verdece, desarrollada en WordPress con HTML, CSS y JavaScript.",
     contribution:
-      "Diseñé la página principal (index), el header y el footer. El sitio se realizó en equipo.",
+      "Diseñé la página principal (index), el encabezado y el pie de página. El sitio se realizó en equipo.",
     collaborators: [
       { name: "JesusWebTV", url: "https://github.com/JesusWebTV" },
       { name: "AriannaHC", url: "https://github.com/AriannaHC" },
@@ -33,7 +33,7 @@ export const projects = [
     type: "PORTAFOLIO WEB",
     organization: "Consultora de Asesoría Empresarial JB",
     description:
-      "Diseño e implementación en React de la estructura visual del sitio, desde el header hasta el footer.",
+      "Portafolio web de la consultora JB que muestra proyectos de los colaboradores del área web, desarrollado con React y Tailwind CSS.",
     contribution:
       "Diseñé e implementé casi toda la interfaz en React. En la sección de proyectos, mi aporte fue el diseño y la estructura, no los proyectos publicados por mis compañeros.",
     creditNote:
@@ -52,7 +52,8 @@ export const projects = [
     ],
     theme: "portafolio",
     image: "/portafolioJB.webp",
-    demoUrl: "https://portafolioweb.consultoradeasesoriaempresarialjb.com/#inicio",
+    demoUrl:
+      "https://portafolioweb.consultoradeasesoriaempresarialjb.com/#inicio",
   },
   {
     id: "aprende-jugando",
@@ -60,9 +61,20 @@ export const projects = [
     type: "LANDING PAGE",
     organization: "Aprende Jugando",
     description:
-      "Landing para una empresa de libros virtuales infantiles, diseñada y desarrollada íntegramente por mí.",
+      "Landing para una empresa de libros virtuales infantiles, desarrollada con React y Tailwind CSS.",
     theme: "aprende",
     image: "/AprendeJugando.webp",
     demoUrl: "https://aprende-jugando-kits-educativos.vercel.app/",
+  },
+  {
+    id: "ChefAi",
+    name: "ChefAi - chatbot para la cocina",
+    type: "Chatbot Personal",
+    organization: "Propia",
+    description:
+      "Chatbot que sugiere recetas con tus ingredientes y ayuda a crear listas de compras. Desarrollado con React, FastAPI y Supabase.",
+    theme: "chefai",
+    image: "/chefAi.webp",
+    demoUrl: "https://chef-ai-lovat.vercel.app/",
   },
 ];

@@ -1,8 +1,24 @@
 import { useEffect, useRef, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
+import { useReducedMotion } from "motion/react";
+import * as m from "motion/react-m";
 import { projects } from "../../data/projects";
 import Icon from "../Icon";
 import { Heading, SectionLabel } from "../SectionHeading";
+
+const sectionVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.12 } },
+};
+
+const revealVariants = {
+  hidden: { opacity: 0, y: 18 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+  },
+};
 
 function ProjectPreview({ project }) {
   return (
@@ -211,18 +227,33 @@ function ProjectsCarousel() {
   );
 }
 export default function ProjectsSection() {
+  const reducedMotion = useReducedMotion();
+
   return (
     <section id="proyectos" className="page-section projects-section">
-      <SectionLabel number="02">Proyectos</SectionLabel>
-      <Heading description="Sitios que diseñé y desarrollé de forma individual y en equipo">
-        Proyectos <em>Desarrollados.</em>
-      </Heading>
-      <ProjectsCarousel />
-      <p className="projects-rights-note">
-        Las marcas y los contenidos de cada sitio corresponden a sus respectivos
-        titulares. Aquí describo mi participación en cada proyecto y reconozco
-        el trabajo de mis compañeros.
-      </p>
+      <m.div
+        variants={sectionVariants}
+        initial={reducedMotion ? false : "hidden"}
+        whileInView={reducedMotion ? undefined : "visible"}
+        viewport={{ once: true, amount: 0.15 }}
+      >
+        <m.div variants={revealVariants}>
+          <SectionLabel number="02">Proyectos</SectionLabel>
+        </m.div>
+        <m.div variants={revealVariants}>
+          <Heading description="Sitios que diseñé y desarrollé de forma individual y en equipo">
+            Proyectos <em>Desarrollados.</em>
+          </Heading>
+        </m.div>
+        <m.div variants={revealVariants}>
+          <ProjectsCarousel />
+        </m.div>
+        <m.p className="projects-rights-note" variants={revealVariants}>
+          Las marcas y los contenidos de cada sitio corresponden a sus
+          respectivos titulares. Aquí describo mi participación en cada proyecto
+          y reconozco el trabajo de mis compañeros.
+        </m.p>
+      </m.div>
     </section>
   );
 }
