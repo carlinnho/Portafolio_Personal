@@ -188,8 +188,11 @@ export default function AboutSection() {
             </m.div>
             <m.div className="about-text" variants={revealVariants}>
               <p className="lead">
-                Construyo productos web que se sienten simples por fuera y
-                sólidos por dentro.
+                Soy Carlos Daniel Pure Tocre, desarrollador Full Stack en Perú.
+              </p>
+              <p>
+                Diseño y construyo soluciones web funcionales, desde páginas y
+                landing pages hasta aplicaciones web.
               </p>
             </m.div>
             <m.dl className="about-facts" variants={revealVariants}>
